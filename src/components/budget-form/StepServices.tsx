@@ -143,10 +143,11 @@ export function StepServices() {
 
                             <div className="sm:col-span-1 md:col-span-2">
                                 <Input
-                                    label="Valor Unit."
+                                    label="Valor Unit. (R$)"
                                     type="number"
                                     step="0.01"
-                                    placeholder="0.00"
+                                    min="0"
+                                    placeholder="0,00"
                                     error={errors.unitPrice?.message}
                                     {...register('unitPrice')}
                                 />
