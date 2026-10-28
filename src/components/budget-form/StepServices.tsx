@@ -46,6 +46,7 @@ export function StepServices() {
         handleSubmit,
         reset,
         watch,
+        setValue,
         formState: { errors },
     } = useForm<ItemFormData>({
         resolver: zodResolver(itemFormSchema) as any,
@@ -58,8 +59,31 @@ export function StepServices() {
         }
     });
 
+    const [unitPriceDisplay, setUnitPriceDisplay] = React.useState('');
+
     const selectedType = watch('type');
     const isCustomType = selectedType === 'custom';
+
+    const formatCurrencyInput = (value: string) => {
+        // Remove tudo que não for dígito
+        const numbers = value.replace(/\D/g, '');
+        if (numbers === '') return '';
+        const amount = parseInt(numbers, 10) / 100;
+        return amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    };
+
+    const handleUnitPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const raw = e.target.value;
+        const numbers = raw.replace(/\D/g, '');
+        if (numbers === '') {
+            setUnitPriceDisplay('');
+            setValue('unitPrice', 0 as any, { shouldValidate: true });
+            return;
+        }
+        const amount = parseInt(numbers, 10) / 100;
+        setUnitPriceDisplay(formatCurrencyInput(raw));
+        setValue('unitPrice', amount as any, { shouldValidate: true });
+    };
 
     const onAddItem = (data: ItemFormData) => {
         const finalType = data.type === 'custom' ? data.customType! : data.type;
@@ -82,6 +106,7 @@ export function StepServices() {
             unitPrice: 0,
             customType: '',
         });
+        setUnitPriceDisplay('');
     };
 
     const [listError, setListError] = React.useState<string | null>(null);
@@ -142,15 +167,18 @@ export function StepServices() {
                             </div>
 
                             <div className="sm:col-span-1 md:col-span-2">
-                                <Input
-                                    label="Valor Unit. (R$)"
-                                    type="number"
-                                    step="0.01"
-                                    min="0"
-                                    placeholder="0,00"
-                                    error={errors.unitPrice?.message}
-                                    {...register('unitPrice')}
-                                />
+                                <div className="flex flex-col gap-1 w-full">
+                                    <label className="text-sm font-medium text-gray-700">Valor Unit. (R$)</label>
+                                    <input
+                                        type="text"
+                                        inputMode="numeric"
+                                        placeholder="R$ 0,00"
+                                        value={unitPriceDisplay}
+                                        onChange={handleUnitPriceChange}
+                                        className="flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all duration-200"
+                                    />
+                                    {errors.unitPrice?.message && <span className="text-xs text-red-500">{errors.unitPrice.message}</span>}
+                                </div>
                             </div>
 
                             <div className="sm:col-span-1 md:col-span-2">
