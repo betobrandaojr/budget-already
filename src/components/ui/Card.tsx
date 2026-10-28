@@ -16,9 +16,9 @@ export function Card({ className, title, description, children, ...props }: Card
             {...props}
         >
             {(title || description) && (
-                <div className="flex flex-col space-y-1.5 p-6 border-b border-gray-100/50">
+                <div className="flex flex-col space-y-1.5 p-4 sm:p-6 border-b border-gray-100/50">
                     {title && (
-                        <h3 className="font-semibold leading-none tracking-tight text-lg">
+                        <h3 className="font-semibold leading-tight tracking-tight text-base sm:text-lg">
                             {title}
                         </h3>
                     )}
@@ -29,7 +29,7 @@ export function Card({ className, title, description, children, ...props }: Card
                     )}
                 </div>
             )}
-            <div className="p-6">{children}</div>
+            <div className="p-4 sm:p-6">{children}</div>
         </div>
     );
 }

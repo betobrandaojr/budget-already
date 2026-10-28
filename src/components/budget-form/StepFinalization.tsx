@@ -52,17 +52,17 @@ export function StepFinalization() {
                         Observações Gerais
                     </label>
                     <textarea
-                        className="flex min-h-[120px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all duration-200"
+                        className="flex min-h-[100px] sm:min-h-[120px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all duration-200"
                         placeholder="Ex: Pagamento 50% na entrada e 50% na entrega..."
                         {...register('notes')}
                     />
                 </div>
 
-                <div className="flex justify-between pt-4">
-                    <Button type="button" variant="outline" onClick={() => setStep(3)}>
+                <div className="flex flex-col sm:flex-row justify-between gap-2 pt-4">
+                    <Button type="button" variant="outline" onClick={() => setStep(3)} className="w-full sm:w-auto">
                         Voltar
                     </Button>
-                    <Button type="submit">Visualizar Orçamento</Button>
+                    <Button type="submit" className="w-full sm:w-auto">Visualizar Orçamento</Button>
                 </div>
             </form>
         </Card>

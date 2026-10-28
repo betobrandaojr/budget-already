@@ -104,11 +104,11 @@ export function StepServices() {
         <Card title="Serviços e Itens" description="Adicione os serviços ou produtos ao orçamento.">
             <div className="space-y-6">
                 {/* Form to add new item */}
-                <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <h4 className="text-sm font-medium text-gray-900 mb-4">Adicionar Novo Item</h4>
+                <div className="p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <h4 className="text-sm font-medium text-gray-900 mb-3 sm:mb-4">Adicionar Novo Item</h4>
                     <form onSubmit={handleSubmit(onAddItem)} className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
-                            <div className="md:col-span-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-3 sm:gap-4 items-start">
+                            <div className="sm:col-span-2 md:col-span-3">
                                 <label className="text-xs font-medium text-gray-700 mb-1 block">Tipo</label>
                                 <select
                                     {...register('type')}
@@ -132,7 +132,7 @@ export function StepServices() {
                                 {!isCustomType && errors.type && <span className="text-xs text-red-500">{errors.type.message}</span>}
                             </div>
 
-                            <div className="md:col-span-5">
+                            <div className="sm:col-span-2 md:col-span-5">
                                 <Input
                                     label="Descrição"
                                     placeholder="Ex: Desenvolvimento Web"
@@ -141,7 +141,7 @@ export function StepServices() {
                                 />
                             </div>
 
-                            <div className="md:col-span-2">
+                            <div className="sm:col-span-1 md:col-span-2">
                                 <Input
                                     label="Valor Unit."
                                     type="number"
@@ -152,7 +152,7 @@ export function StepServices() {
                                 />
                             </div>
 
-                            <div className="md:col-span-2">
+                            <div className="sm:col-span-1 md:col-span-2">
                                 <Input
                                     label="Qtd"
                                     type="number"
@@ -162,8 +162,8 @@ export function StepServices() {
                             </div>
                         </div>
 
-                        <div className="flex justify-between items-end">
-                            <div className="w-1/2 md:w-1/3">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3">
+                            <div className="w-full sm:w-1/2 md:w-1/3">
                                 <label className="text-xs font-medium text-gray-700 mb-1 block">Unidade</label>
                                 <select
                                     {...register('unit')}
@@ -174,7 +174,7 @@ export function StepServices() {
                                     ))}
                                 </select>
                             </div>
-                            <Button type="submit" size="sm" variant="secondary" className="font-bold">
+                            <Button type="submit" size="sm" variant="secondary" className="font-bold w-full sm:w-auto">
                                 <Plus className="w-4 h-4 mr-2" /> Adicionar na Lista
                             </Button>
                         </div>
@@ -186,36 +186,66 @@ export function StepServices() {
                     <h4 className="text-sm font-medium text-gray-900">Itens Adicionados ({items.length})</h4>
 
                     {items.length === 0 ? (
-                        <p className="text-sm text-gray-500 italic p-4 text-center border border-dashed rounded-md">
+                        <p className="text-sm text-gray-500 italic p-3 sm:p-4 text-center border border-dashed rounded-md">
                             Nenhum item adicionado ainda. Use o formulário acima para adicionar serviços.
                         </p>
                     ) : (
                         <div className="border rounded-md divide-y overflow-hidden">
-                            {items.map((item) => (
-                                <div key={item.id} className="p-3 flex items-center justify-between text-sm bg-white">
-                                    <div className="grid grid-cols-12 gap-4 w-full items-center">
-                                        <span className="col-span-2 font-medium text-gray-600 bg-gray-100 px-2 py-1 rounded text-xs text-center">{item.type}</span>
-                                        <span className="col-span-4 font-medium">{item.description}</span>
-                                        <span className="col-span-2 text-right text-gray-500">
-                                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.unitPrice)}
-                                        </span>
-                                        <span className="col-span-2 text-center text-gray-500 text-xs">
-                                            {item.quantity} {item.unit}
-                                        </span>
-                                        <span className="col-span-2 text-right font-semibold">
-                                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.unitPrice * item.quantity)}
-                                        </span>
+                            <div className="hidden md:block">
+                                {items.map((item) => (
+                                    <div key={item.id} className="p-3 flex items-center justify-between text-sm bg-white">
+                                        <div className="grid grid-cols-12 gap-4 w-full items-center">
+                                            <span className="col-span-2 font-medium text-gray-600 bg-gray-100 px-2 py-1 rounded text-xs text-center">{item.type}</span>
+                                            <span className="col-span-4 font-medium">{item.description}</span>
+                                            <span className="col-span-2 text-right text-gray-500">
+                                                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.unitPrice)}
+                                            </span>
+                                            <span className="col-span-2 text-center text-gray-500 text-xs">
+                                                {item.quantity} {item.unit}
+                                            </span>
+                                            <span className="col-span-2 text-right font-semibold">
+                                                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.unitPrice * item.quantity)}
+                                            </span>
+                                        </div>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="ml-2 text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
+                                            onClick={() => removeItem(item.id)}
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </Button>
                                     </div>
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="ml-2 text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0"
-                                        onClick={() => removeItem(item.id)}
-                                    >
-                                        <Trash2 className="w-4 h-4" />
-                                    </Button>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
+
+                            {/* Mobile view */}
+                            <div className="md:hidden divide-y">
+                                {items.map((item) => (
+                                    <div key={item.id} className="p-3 bg-white space-y-2">
+                                        <div className="flex items-start justify-between gap-2">
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <span className="font-medium text-gray-600 bg-gray-100 px-2 py-0.5 rounded text-xs">{item.type}</span>
+                                                </div>
+                                                <p className="font-medium text-sm">{item.description}</p>
+                                            </div>
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                className="text-red-500 hover:text-red-700 hover:bg-red-50 h-8 w-8 p-0 flex-shrink-0"
+                                                onClick={() => removeItem(item.id)}
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </Button>
+                                        </div>
+                                        <div className="flex items-center justify-between text-xs text-gray-600">
+                                            <span>{item.quantity} {item.unit} × {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.unitPrice)}</span>
+                                            <span className="font-semibold text-gray-900">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.unitPrice * item.quantity)}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     )}
 
@@ -234,11 +264,11 @@ export function StepServices() {
                             {listError}
                         </div>
                     )}
-                    <div className="flex justify-between items-center w-full">
-                        <Button type="button" variant="outline" onClick={() => setStep(2)}>
+                    <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 w-full">
+                        <Button type="button" variant="outline" onClick={() => setStep(2)} className="w-full sm:w-auto">
                             Voltar
                         </Button>
-                        <Button onClick={onNext} className="bg-gray-900 hover:bg-gray-800 text-white font-bold">
+                        <Button onClick={onNext} className="bg-gray-900 hover:bg-gray-800 text-white font-bold w-full sm:w-auto">
                             Próximo Passo
                         </Button>
                     </div>

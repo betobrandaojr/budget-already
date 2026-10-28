@@ -32,7 +32,7 @@ export function StepProvider() {
     return (
         <Card title="Dados do Prestador" description="Preencha suas informações de contato.">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <Input
                         label="Nome"
                         error={errors.firstName?.message}
@@ -45,7 +45,7 @@ export function StepProvider() {
                     />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <Input
                         label="E-mail"
                         type="email"
@@ -66,7 +66,7 @@ export function StepProvider() {
                 />
 
                 <div className="flex justify-end pt-4">
-                    <Button type="submit">Próximo</Button>
+                    <Button type="submit" className="w-full sm:w-auto">Próximo</Button>
                 </div>
             </form>
         </Card>
